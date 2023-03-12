@@ -1,3 +1,6 @@
+url: edward-qin.github.io
+baseurl: /edward-qin.github.io
+
 # Build settings
 markdown: kramdown
 theme: minima

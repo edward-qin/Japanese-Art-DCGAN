@@ -55,7 +55,9 @@ To train our model, we first resized the 2235 images of our dataset to $64 \time
 
 Our results are displayed below
 
-![Version 1 Results](https://github.com/edward-qin/edward-qin.github.io/blob/main/assets/v1.gif/)
+![Version 1 Results](assets/v1.gif)
+
+aa
 
 # Version 2
 
@@ -63,7 +65,7 @@ We noticed that in Version 1, our loss function was diverging. This suggested th
 
 Our results are as follows:
 
-![Version 2 Results](https://github.com/edward-qin/edward-qin.github.io/blob/main/assets/v2.gif/)
+![Version 2 Results](assets/v2.gif)
 
 # Version 3
 

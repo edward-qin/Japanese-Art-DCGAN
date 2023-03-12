@@ -29,11 +29,11 @@ Our goal for this project was to generate new visual art in the style of Japanse
 
 # GAN Model
 
-A GAN is a generative adversarial network, which is composed of a generator and discriminator model. The discriminator attempts to determine if input images are part of the training data set versus if they are from the generated fake images. The generator attempts to generate images to fool the discriminator into thinking they are real. 
+A GAN is a generative adversarial network, which is composed of a generator and discriminator model. The discriminator attempts to determine if input images are part of the training dataset (labeled 1) versus if they are from the generated fake images (labeled 0). The generator attempts to generate images to fool the discriminator into thinking they are real. 
 
-In this project, we are using a DCGAN, a deep convolutional GAN, which uses convolutional and convolutional-transpose layers in the discriminator and generator respectively. 
+In this project, we use a DCGAN, a deep convolutional GAN, which uses convolutional and convolutional-transpose layers in the discriminator and generator respectively. 
 
-If $x$ represents the input image data, then $$D(x)$$ represents the probability that the discriminator determines that $x$ came from the training dataset. 
+If $x$ represents the input image data, then $D(x)$ represents the probability that the discriminator determines that $x$ came from the training dataset. 
 
 Now suppose we have a latent space vector $z$ composed of random values such that when fed to the generator, $G(z)$ maps $z$ to a data space representing an image. The goal of the generator is to estimate the distribution $p_{data}$ that generates the real images from the training data. Formalized, this is when $D(G(z)) = D(x)$, meaning the discriminator cannot discriminate between real and generate images. 
 
@@ -41,19 +41,30 @@ Likewise, the distribution of the generated images $p_g$ is the same as the dist
 
 $$\min_G\max_DV(D, G) = \mathbb{E}_{x \sim p_{data}(x)}[logD(x)] + \mathbb{E}_{z \sim p_{z}(z)}[log(1-D(G(z)))]$$
 
-We can see that this loss function is similar to the `BCELoss` function which we use in our training. 
+We can see that this loss function is similar to the PyTorch `BCELoss` function which we use in our training. 
 
 # Version 1
 
-Original, based on pytorch DCGAN
+For the first version of our model, we based the architecture on the PyTorch DCGAN tutorial model.
 
-# Modification 1
+The input to the generator is $z$, the latent space vector of length 100. In each of the 5 convolutional-transpose layers, we upsample the input by a factor of $2 \times 2$. After each convolutional-transpose before the final convolutional-transpose, we also apply a batch normalization followed by a ReLU activation. On the last convolutional-transpose layer, we do a final $\tanh$ activation function on the $3\times64\times64$ image.
 
-Label smoothing + activation function change
+The discriminator architecture is like the inverse of the generator, with input image of size $3 \times 64 \times 64$. We have 5 convolutional layers that each downsample by a factor of $2 \times 2$. We apply batch normalization on layers other than the first and last layer, and all layers other than the last layer use the Leaky ReLU activation function. In the final layer, we apply the sigmoid function to determine the probability that image is real, $D(x)$.
 
-# Modification 2
+To train our model, we first resized the 2235 images of our dataset to $64 \times 64$ images. We then used a batch size of 128, learning rate of 0.0005, the Adam optimizer with $\beta_1$ coefficient 0.5, and 300 epochs. 
 
-Label smoothing only
+Our results are then as follows
+
+
+# Version 2
+
+We noticed that in Version 1, our loss function was diverging. This suggested that our discriminator was becoming too accurate too quickly. Thus, we attempted to slow the rate of change in discriminator loss. We did so by applying label smoothing, which changed the labels from 0 and 1 to ranges $[0, 0.3]$ and $[0.7, 1]$, as well as changing the generator's activation functions from ReLU to Leaky ReLU. These changes were based on tips from this [github page](https://github.com/soumith/ganhacks).
+
+Our results were as follows
+
+# Version 3
+
+Based on setbacks in Version 2, we decided that the 
 
 # Setbacks
 

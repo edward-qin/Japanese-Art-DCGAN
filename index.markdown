@@ -53,14 +53,17 @@ The discriminator architecture is like the inverse of the generator, with input 
 
 To train our model, we first resized the 2235 images of our dataset to $64 \times 64$ images. We then used a batch size of 128, learning rate of 0.0005, the Adam optimizer with $\beta_1$ coefficient 0.5, and 300 epochs. 
 
-Our results are then as follows
+Our results are displayed below
 
+![Version 1 Results](https://github.com/edward-qin/edward-qin.github.io/blob/main/assets/v1.gif/)
 
 # Version 2
 
 We noticed that in Version 1, our loss function was diverging. This suggested that our discriminator was becoming too accurate too quickly. Thus, we attempted to slow the rate of change in discriminator loss. We did so by applying label smoothing, which changed the labels from 0 and 1 to ranges $[0, 0.3]$ and $[0.7, 1]$, as well as changing the generator's activation functions from ReLU to Leaky ReLU. These changes were based on tips from this [github page](https://github.com/soumith/ganhacks).
 
-Our results were as follows
+Our results are as follows:
+
+![Version 2 Results](https://github.com/edward-qin/edward-qin.github.io/blob/main/assets/v2.gif/)
 
 # Version 3
 

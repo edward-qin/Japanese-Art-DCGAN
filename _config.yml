@@ -28,7 +28,7 @@ url: "http://edward-qin.github.io" # the base hostname & protocol for your site,
 theme: minima
 markdown: kramdown
 kramdown:
-  math_engine: katex
+  math_engine: mathjax
 plugins:
   - jekyll-feed
 

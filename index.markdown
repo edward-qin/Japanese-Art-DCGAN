@@ -45,6 +45,7 @@ Label smoothing only
 
 Spiking - mode collapse, GAN is hard to train
 Unstructured data - harder for model to learn the structure (but got the style)
+Converging data - when using both label smoothing and activation function change outputs became similar and only becoming more blurred. 
 
 # Conclusion
 

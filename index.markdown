@@ -19,7 +19,7 @@ A GAN is a generative adversarial network, which is composed of a generator and 
 
 In this project, we are using a DCGAN, a deep convolutional GAN, which uses convolutional and convolutional-transpose layers in the discriminator and generator respectively. 
 
-If $x$ represents the input image data, then $D(x)$ represents the probability that the discriminator determines that $x$ came from the training dataset. 
+If $$x$$ represents the input image data, then $D(x)$ represents the probability that the discriminator determines that $x$ came from the training dataset. 
 
 Now suppose we have a latent space vector $z$ composed of random values such that when fed to the generator, $G(z)$ maps $z$ to a data space representing an image. The goal of the generator is to estimate the distribution $p_{data}$ that generates the real images from the training data. Formalized, this is when $D(G(z)) = D(x)$, meaning the discriminator cannot discriminate between real and generate images. 
 

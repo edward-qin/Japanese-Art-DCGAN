@@ -59,9 +59,11 @@ To train our model, we first resized the 2235 images of our dataset to $64 \time
 Below, we provide the plot of the discriminator and generator loss over iterations, as well as the change in the generated images over time.
 
 ![Plot of Version 1 Loss](assets/v1loss.png)
+
 *Version 1 Discriminator and Generator Loss*
 
 ![Version 1 Results](assets/v1.gif)
+
 *Version 1 Generated Images*
 
 # Version 2
@@ -71,9 +73,11 @@ We noticed that in Version 1, our loss function was diverging. This suggested th
 Below, we again provide the plot of the discriminator and generator loss over iterations, as well as the change in the generated images over time.
 
 ![Plot of Version 2 Loss](assets/v2loss.png)
+
 *Version 2 Discriminator and Generator Loss*
 
 ![Version 2 Results](assets/v2.gif)
+
 *Version 2 Generated Images*
 
 # Version 3

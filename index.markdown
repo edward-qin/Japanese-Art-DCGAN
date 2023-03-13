@@ -97,13 +97,16 @@ We again used the same image size, batch size, learning rate, and optimizer, but
 As we see below, the plot of the discriminator and generator loss does not diverge as much as the previous versions. We also see that there is more structure in the generated images over time.
 
 ![Plot of Version 3 Loss](assets/v3loss.png)
+
 *Version 3 Discriminator and Generator Loss*
 
 ![Version 3 Results](assets/v3.gif)
+
 *Version 3 Generated Images*
 
-From the loss plot, we
-How approach was beneficial
+However, from the loss plot, we see that there is some spiking and divergence after 6000 iterations. We also see that the images sometimes form more convincing and detailed images at an epoch before becoming blurred in a later epoch. In particular, row 4 column 6 of the generated images depicts human figures approximately 2/3 through the training before they vanish into whiteness and form human figures again at near the final epochs.
+
+However, this approach to use label smoothing was ultimately beneficial. We saw less spiking in the loss function, and divergence did not appear until later. In the generated images, we also saw slightly more structure at various points of the training process.
 
 # Reflection on setbacks
 

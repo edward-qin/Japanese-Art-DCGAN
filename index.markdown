@@ -30,6 +30,8 @@ Authors: Daniel Gao, Edward Qin
 
 Our goal for this project was to generate new visual art in the style of Japansese art from Japan from the Muromachi period (1392-1573) all the way to the Shōwa period (1926-1989). We used a Generative Adversarial Network (GAN), which is composed of a generative and discriminative network. The dataset we used is the Japanese Art directory from the [WikiArt Art Movements/Styles](https://www.kaggle.com/datasets/sivarazadi/wikiart-art-movementsstyles) dataset on Kaggle. 
 
+Check out our [model](https://colab.research.google.com/drive/16f-V6o3iB7EYTjML0i0ebYNm2gsts9WP?usp=sharing) on Google Colab and our [video demo]()!
+
 # GAN Model
 
 A GAN is a generative adversarial network, which is composed of a generator and discriminator model. The discriminator attempts to determine if input images are part of the training dataset (labeled 1) versus if they are from the generated fake images (labeled 0). The generator attempts to generate images to fool the discriminator into thinking they are real. 
@@ -48,13 +50,13 @@ We can see that this loss function is similar to the PyTorch `BCELoss` function 
 
 # Version 1
 
-For the first version of our model, we based the architecture on the PyTorch DCGAN tutorial model.
+For the first version of our model, we based the architecture on previous work, the [PyTorch DCGAN tutorial model](https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html).
 
 The input to the generator is $z$, the latent space vector of length 100. In each of the 5 convolutional-transpose layers, we upsample the input by a factor of $2 \times 2$. After each convolutional-transpose before the final convolutional-transpose, we also apply a batch normalization followed by a ReLU activation. On the last convolutional-transpose layer, we do a final $\tanh$ activation function on the $3\times64\times64$ image.
 
 The discriminator architecture is like the inverse of the generator, with input image of size $3 \times 64 \times 64$. We have 5 convolutional layers that each downsample by a factor of $2 \times 2$. We apply batch normalization on layers other than the first and last layer, and all layers other than the last layer use the Leaky ReLU activation function. In the final layer, we apply the sigmoid function to determine the probability that image is real, $D(x)$.
 
-To train our model, we first resized the 2235 images of our dataset to $64 \times 64$ images. We then used a batch size of 128, learning rate of 0.0005, the Adam optimizer with $\beta_1$ coefficient 0.5, and 300 epochs. 
+To train our model, we first resized the 2235 images of our dataset to $64 \times 64$ images. We then used a batch size of 128, learning rate of 0.0005, the Adam optimizer with $\beta_1$ coefficient 0.5 (instead of 0.9 in the tutorial), and 300 epochs. 
 
 Below, we provide the plot of the discriminator and generator loss over iterations, as well as the change in the generated images over time.
 
@@ -66,9 +68,13 @@ Below, we provide the plot of the discriminator and generator loss over iteratio
 
 *Version 1 Generated Images*
 
+From the plot of the losses, we observe that the the discriminator and generator loss start to diverge after 2000 iterations. There is also unexplained spiking for both the discriminator and generator loss after 2500 iterations. However, from the generated images, we notice that the generator struggles to create definitive, structural objects. Some generated images seem to depict landscapes like mountains and bodies of water well, but there are no clear faces on images that seem to generate people.
+
 # Version 2
 
-We noticed that in Version 1, our loss function was diverging. This suggested that our discriminator was becoming too accurate too quickly. Thus, we attempted to slow the rate of change in discriminator loss. We did so by applying label smoothing, which changed the labels from 0 and 1 to ranges $[0, 0.3]$ and $[0.7, 1]$, as well as changing the generator's activation functions from ReLU to Leaky ReLU. These changes were based on tips from this [github page](https://github.com/soumith/ganhacks).
+We noticed that in Version 1, our loss function was diverging. This suggested that our discriminator was becoming too accurate too quickly. Thus, we attempted to slow the rate of change in discriminator loss. We took a new approach by applying label smoothing, which changed the labels from 0 and 1 to ranges $[0, 0.3]$ and $[0.7, 1]$, as well as changing the generator's activation functions from ReLU to Leaky ReLU. These changes were based on tips from this [github page](https://github.com/soumith/ganhacks).
+
+The image size, batch size, learning rate, and optimizer we used were the same as that of version 1. However, we stopped training after 100 epochs. 
 
 Below, we again provide the plot of the discriminator and generator loss over iterations, as well as the change in the generated images over time.
 
@@ -80,9 +86,13 @@ Below, we again provide the plot of the discriminator and generator loss over it
 
 *Version 2 Generated Images*
 
+From the loss plot, we observe that the discriminator and generator loss begin to diverge after 500 iterations. However, compared to version 1, the overall loss is much lower for both networks. This is likely due to the label smoothing. However, we decided to stop training after 100 epochs because we noticed that the images were all following the same blurring and checkerboard pattern.
+
 # Version 3
 
-Based on setbacks in Version 2, we decided that the 
+Based on setbacks in Version 2, we decided that we should revert a change made. We reasoned that label smoothing helps the discriminator learn at a lower pace, increasing stability, so we opted to revert the activation function change.
+
+We again used the same image size, batch size, learning rate, and optimizer, but trained for 400 epochs, instead.
 
 As we see below, the plot of the discriminator and generator loss does not diverge as much as the previous versions. We also see that there is more structure in the generated images over time.
 
@@ -92,9 +102,11 @@ As we see below, the plot of the discriminator and generator loss does not diver
 ![Version 3 Results](assets/v3.gif)
 *Version 3 Generated Images*
 
+From the loss plot, we
+
 # Reflection on setbacks
 
-Throughout the training process, we experience a few difficulties. First, we saw that the losses were spiking in the version 1 model. We could not determine what exactly caused the spiking, but we recognized that GAN model training is difficult and unstable. We attributed the spiking behavior to mode collapse, where the discriminator was trained too quickly and the generator could only make minor changes before the discriminator learned the generator's change.
+Throughout the training process, we experienced a few difficulties. First, we saw that the losses were spiking in the version 1 model. We could not determine what exactly caused the spiking, but we recognized that GAN model training is difficult and unstable. We attributed the spiking behavior to mode collapse, where the discriminator was trained too quickly and the generator could only make minor changes before the discriminator learned the generator's change.
 
 Secondly, we realized that our data was unstructured. The data used in other GAN models has usually been the Celebrity A dataset, where celebrity faces are aligned. However, our images were both unaligned and of different objects. We had both landscapes and people in the art. As such, we noticed that our generator mimicked the Japanese Art _style_ well, but not necessarily the structure of the objects in the image.
 
@@ -102,16 +114,10 @@ Finally, the generated images seemed to converge when we applied both label smoo
 
 # Conclusion
 
-While we believe that the GAN model was successful in generating the art style, we believe that the next steps would be to train for the structure of the images. We could do so by 
+While we believe that the GAN model was successful in generating the art style, we believe that the next steps would be to train for the structure of the images. We could do so by either finding a better dataset or using a different model. Ideally, we would have a larger dataset where images are aligned and do not span art styles in a range of over 5 centuries. We could also use the diffusion model, which while more expensive in training time, is stabler and better at generating images than GANs.
 
-better data
-diffusion model
-
-
-We also think it would be interesting if, supposing that we successfully train the model, we expand it to also generate different styles from the WikiArt dataset.
+Additionally, we think it would be interesting if, supposing that we successfully train the model, we expanded it to also generate different styles like Romanticism or Baroque art styles in the WikiArt dataset.
 
 - - -
-
-Check out our [model](https://colab.research.google.com/drive/16f-V6o3iB7EYTjML0i0ebYNm2gsts9WP?usp=sharing) on Google Colab and our [video demo]()!
 
 

@@ -28,7 +28,7 @@ Authors: Daniel Gao, Edward Qin
 
 # Introduction
 
-Our goal for this project was to generate new visual art in the style of Japansese art from Japan from the Muromachi period (1392-1573) all the way to the Shōwa period (1926-1989). We used a Generative Adversarial Network (GAN), which is composed of a generative and discriminative network. The dataset we used is the Japanese Art directory from the [WikiArt Art Movements/Styles](https://www.kaggle.com/datasets/sivarazadi/wikiart-art-movementsstyles) dataset on Kaggle. 
+Our goal for this project was to generate new visual art in the style of Japansese art from the Muromachi period (1392-1573) all the way to the Shōwa period (1926-1989). We used a Generative Adversarial Network (GAN), which is composed of a generative and discriminative network. The dataset we used is the Japanese Art directory from the [WikiArt Art Movements/Styles](https://www.kaggle.com/datasets/sivarazadi/wikiart-art-movementsstyles) dataset on Kaggle. 
 
 Check out our [model](https://colab.research.google.com/drive/16f-V6o3iB7EYTjML0i0ebYNm2gsts9WP?usp=sharing) on Google Colab and our [video demo]()!
 
@@ -52,9 +52,9 @@ We can see that this loss function is similar to the PyTorch `BCELoss` function 
 
 For the first version of our model, we based the architecture on previous work, the [PyTorch DCGAN tutorial model](https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html).
 
-The input to the generator is $z$, the latent space vector of length 100. In each of the 5 convolutional-transpose layers, we upsample the input by a factor of $2 \times 2$. After each convolutional-transpose before the final convolutional-transpose, we also apply a batch normalization followed by a ReLU activation. On the last convolutional-transpose layer, we do a final $\tanh$ activation function on the $3\times64\times64$ image.
+The input to the generator is $z$, a latent space vector of length 100. In each of the 5 convolutional-transpose layers, we upsample the input by a factor of $2 \times 2$. After each convolutional-transpose before the final convolutional-transpose, we also apply a batch normalization followed by a ReLU activation. On the last convolutional-transpose layer, we do a final $\tanh$ activation function on the $3\times64\times64$ image.
 
-The discriminator architecture is like the inverse of the generator, with input image of size $3 \times 64 \times 64$. We have 5 convolutional layers that each downsample by a factor of $2 \times 2$. We apply batch normalization on layers other than the first and last layer, and all layers other than the last layer use the Leaky ReLU activation function. In the final layer, we apply the sigmoid function to determine the probability that image is real, $D(x)$.
+The discriminator architecture is like the inverse of the generator, with input image of size $3 \times 64 \times 64$. We have 5 convolutional layers that each downsample by a factor of $2 \times 2$. We apply batch normalization on layers other than the first and last layer, and all layers other than the last layer use the Leaky ReLU activation function. In the final layer, we apply the sigmoid function to determine the probability that the image is real, $D(x)$.
 
 To train our model, we first resized the 2235 images of our dataset to $64 \times 64$ images. We then used a batch size of 128, learning rate of 0.0005, the Adam optimizer with $\beta_1$ coefficient 0.5 (instead of 0.9 in the tutorial), and 300 epochs. 
 
@@ -86,7 +86,7 @@ Below, we again provide the plot of the discriminator and generator loss over it
 
 *Version 2 Generated Images*
 
-From the loss plot, we observe that the discriminator and generator loss begin to diverge after 500 iterations. However, compared to version 1, the overall loss is much lower for both networks. This is likely due to the label smoothing. However, we decided to stop training after 100 epochs because we noticed that the images were all following the same blurring and checkerboard pattern.
+From the loss plot, we observe that the discriminator and generator loss begin to diverge after 500 iterations. However, compared to version 1, the overall loss is much lower for both networks. This is likely due to the label smoothing. We also decided to stop training after 100 epochs because we noticed that the images were all following the same blurring and checkerboard pattern.
 
 # Version 3
 
@@ -112,7 +112,7 @@ However, this approach to use label smoothing was ultimately beneficial. We saw 
 
 Throughout the training process, we experienced a few difficulties. First, we saw that the losses were spiking in the version 1 model. We could not determine what exactly caused the spiking, but we recognized that GAN model training is difficult and unstable. We attributed the spiking behavior to mode collapse, where the discriminator was trained too quickly and the generator could only make minor changes before the discriminator learned the generator's change.
 
-Secondly, we realized that our data was unstructured. The data used in other GAN models has usually been the Celebrity A dataset, where celebrity faces are aligned. However, our images were both unaligned and of different objects. We had both landscapes and people in the art. As such, we noticed that our generator mimicked the Japanese Art _style_ well, but not necessarily the structure of the objects in the image.
+Secondly, we realized that our data was unstructured. The data used in other GAN models has usually been the Celebrity A dataset, where celebrity faces are aligned. However, our images were both unaligned and of different objects. We had both landscapes and people in the art. As such, we noticed that our generator mimicked the Japanese Art _style_ well, but not necessarily the _structure_ of the objects in the image.
 
 Finally, the generated images seemed to converge when we applied both label smoothing and a different activation function in version 2. As depicted in the change of generated images over time, we saw checkerboard-like patterning and blurring in the images, and the loss functions were clearly diverging. As a result, we decided to create version 3 to determine the source of the patterning.
 

@@ -103,6 +103,7 @@ As we see below, the plot of the discriminator and generator loss does not diver
 *Version 3 Generated Images*
 
 From the loss plot, we
+How approach was beneficial
 
 # Reflection on setbacks
 
@@ -117,7 +118,3 @@ Finally, the generated images seemed to converge when we applied both label smoo
 While we believe that the GAN model was successful in generating the art style, we believe that the next steps would be to train for the structure of the images. We could do so by either finding a better dataset or using a different model. Ideally, we would have a larger dataset where images are aligned and do not span art styles in a range of over 5 centuries. We could also use the diffusion model, which while more expensive in training time, is stabler and better at generating images than GANs.
 
 Additionally, we think it would be interesting if, supposing that we successfully train the model, we expanded it to also generate different styles like Romanticism or Baroque art styles in the WikiArt dataset.
-
-- - -
-
-

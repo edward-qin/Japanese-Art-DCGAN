@@ -30,7 +30,7 @@ Authors: Daniel Gao, Edward Qin
 
 Our goal for this project was to generate new visual art in the style of Japansese art from the Muromachi period (1392-1573) all the way to the Shōwa period (1926-1989). We used a Generative Adversarial Network (GAN), which is composed of a generative and discriminative network. The dataset we used is the Japanese Art directory from the [WikiArt Art Movements/Styles](https://www.kaggle.com/datasets/sivarazadi/wikiart-art-movementsstyles) dataset on Kaggle. 
 
-Check out our [model](https://colab.research.google.com/drive/16f-V6o3iB7EYTjML0i0ebYNm2gsts9WP?usp=sharing) on Google Colab and our [video demo]()!
+Check out our [model](https://colab.research.google.com/drive/16f-V6o3iB7EYTjML0i0ebYNm2gsts9WP?usp=sharing) on Google Colab and our [video demo](https://drive.google.com/file/d/1bDhw2vmxW9qYIz4r-n0kucVwyfOMl_aJ/view?usp=share_link)!
 
 # GAN Model
 

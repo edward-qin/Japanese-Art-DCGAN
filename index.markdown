@@ -2,7 +2,7 @@
 # Feel free to add content and custom Front Matter to this file.
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
-layout: home
+layout: page
 title: GAN
 permalink: /
 ---
@@ -23,7 +23,7 @@ MathJax = {
 
 Authors: Daniel Gao, Edward Qin
 
-![Sample image of Japanese Art](assets/193075.jpg)
+![Sample image of Japanese Art](/Japanese-Art-DCGAN/assets/193075.jpg)
 *Sample of Japanese Art from the training dataset*
 
 # Introduction
@@ -60,11 +60,11 @@ To train our model, we first resized the 2235 images of our dataset to $64 \time
 
 Below, we provide the plot of the discriminator and generator loss over iterations, as well as the change in the generated images over time.
 
-![Plot of Version 1 Loss](assets/v1loss.png)
+![Plot of Version 1 Loss](/Japanese-Art-DCGAN/assets/v1loss.png)
 
 *Version 1 Discriminator and Generator Loss*
 
-![Version 1 Results](assets/v1.gif)
+![Version 1 Results](/Japanese-Art-DCGAN/assets/v1.gif)
 
 *Version 1 Generated Images*
 
@@ -78,11 +78,11 @@ The image size, batch size, learning rate, and optimizer we used were the same a
 
 Below, we again provide the plot of the discriminator and generator loss over iterations, as well as the change in the generated images over time.
 
-![Plot of Version 2 Loss](assets/v2loss.png)
+![Plot of Version 2 Loss](/Japanese-Art-DCGAN/assets/v2loss.png)
 
 *Version 2 Discriminator and Generator Loss*
 
-![Version 2 Results](assets/v2.gif)
+![Version 2 Results](/Japanese-Art-DCGAN/assets/v2.gif)
 
 *Version 2 Generated Images*
 
@@ -96,11 +96,11 @@ We again used the same image size, batch size, learning rate, and optimizer, but
 
 As we see below, the plot of the discriminator and generator loss does not diverge as much as the previous versions. We also see that there is more structure in the generated images over time.
 
-![Plot of Version 3 Loss](assets/v3loss.png)
+![Plot of Version 3 Loss](/Japanese-Art-DCGAN/assets/v3loss.png)
 
 *Version 3 Discriminator and Generator Loss*
 
-![Version 3 Results](assets/v3.gif)
+![Version 3 Results](/Japanese-Art-DCGAN/assets/v3.gif)
 
 *Version 3 Generated Images*
 
